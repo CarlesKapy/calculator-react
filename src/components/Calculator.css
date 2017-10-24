@@ -4,3 +4,8 @@
     border: 1px solid grey;
     padding: 20px;
 }
+
+.key-row{
+    display: flex;
+    flex-direction: row;
+}

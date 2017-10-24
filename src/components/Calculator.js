@@ -17,8 +17,10 @@ class Calculator extends Component{
         if (value === "=") {
             if (this.state.value.length > 0) {
                 const summands = this.state.value.split("+");
-                const result = summands.reduce(function(carry, summand){
-                    return carry + parseInt(summand);
+                const result = summands.reduce((carry, summand) => {
+                    var _summand = parseInt(summand);
+                    if (isNaN(_summand)) _summand = 0;
+                    return carry + _summand;
                 }, 0);
                 this.setState({value: result});
             }
