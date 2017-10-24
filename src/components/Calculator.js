@@ -14,7 +14,15 @@ class Calculator extends Component{
     }
 
     updateScreen(value) {
-        this.setState({value: this.state.value + "" + value})
+        if (value === "=") {
+            const summands = this.state.value.split("+");
+            const result = summands.reduce(function(carry, summand){
+                return carry + parseInt(summand);
+            }, 0);
+            this.setState({value: result});
+        } else {
+            this.setState({value: this.state.value + "" + value})
+        }
     }
 
     render() {
@@ -25,11 +33,11 @@ class Calculator extends Component{
             ["+", "0", "="]
         ]
 
-        const keys = pad.map((rowKeys) => {
+        const keys = pad.map((rowKeys, index) => {
             const row = rowKeys.map((item) => {
-                return <Key onClick={(value) => { this.updateScreen(item) }} key={item} value={item}/>
+                return <Key onPress={(value) => { this.updateScreen(value) }} key={item} value={item}/>
             })
-            return <div className="key-row">{row}</div>
+            return <div key={"keyrow"+index} className="key-row">{row}</div>
         });
 
         return (
