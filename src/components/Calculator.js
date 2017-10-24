@@ -1,32 +1,46 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Screen from './Screen'
 import Key from './Key'
 import './Calculator.css';
 
-const Calculator = () => {
+class Calculator extends Component{
 
-    const pad = [
-        ["7", "8", "9"],
-        ["4", "5", "6"],
-        ["1", "2", "3"],
-        ["+", "0", "="]
-    ]
+    constructor(props) {
+        super(props);
 
-    const keys = pad.map((rowKeys) => {
-        const row = rowKeys.map((item) => {
-            return <Key key={item} value={item}/>
-        })
-        return <div className="key-row">{row}</div>
-    });
+        this.state = {
+            value: ""
+        }
+    }
 
-    return (
-        <div className="calculator">
-            <Screen/>
-            <div className="keys">
-                {keys}
+    updateScreen(value) {
+        this.setState({value: this.state.value + "" + value})
+    }
+
+    render() {
+        const pad = [
+            ["7", "8", "9"],
+            ["4", "5", "6"],
+            ["1", "2", "3"],
+            ["+", "0", "="]
+        ]
+
+        const keys = pad.map((rowKeys) => {
+            const row = rowKeys.map((item) => {
+                return <Key onClick={(value) => { this.updateScreen(item) }} key={item} value={item}/>
+            })
+            return <div className="key-row">{row}</div>
+        });
+
+        return (
+            <div className="calculator">
+                <Screen value={this.state.value}/>
+                <div className="keys">
+                    {keys}
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default Calculator;
