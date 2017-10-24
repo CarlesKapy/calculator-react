@@ -15,11 +15,15 @@ class Calculator extends Component{
 
     updateScreen(value) {
         if (value === "=") {
-            const summands = this.state.value.split("+");
-            const result = summands.reduce(function(carry, summand){
-                return carry + parseInt(summand);
-            }, 0);
-            this.setState({value: result});
+            if (this.state.value.length > 0) {
+                const summands = this.state.value.split("+");
+                const result = summands.reduce(function(carry, summand){
+                    return carry + parseInt(summand);
+                }, 0);
+                this.setState({value: result});
+            }
+        } else if (value === "C") {
+            this.setState({value: ""});
         } else {
             this.setState({value: this.state.value + "" + value})
         }
@@ -30,7 +34,8 @@ class Calculator extends Component{
             ["7", "8", "9"],
             ["4", "5", "6"],
             ["1", "2", "3"],
-            ["+", "0", "="]
+            ["+", "0", "="],
+            ["C"],
         ]
 
         const keys = pad.map((rowKeys, index) => {
